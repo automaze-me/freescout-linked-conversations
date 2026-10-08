@@ -189,4 +189,52 @@ class NewLinkedTest extends TestCase
         $this->assertSame('success', $response['status']);
         $this->assertNull($draft->fresh()->getMeta(NewLinked::META));
     }
+
+    private function undoneConversation($user, $mailbox, $original)
+    {
+        $new = $this->conversation($mailbox);
+        request()->merge([Actions::LINK_TO_PARAM => $original->id]);
+        \Eventy::action('conversation.created_by_user_can_undo', $new, $this->createdBy($user, $new));
+        $this->assertNotNull(ConversationLink::pair($original->id, $new->id));
+
+        // Core's undo: back to a draft with the same id, reopened without the query parameter.
+        $new->state = Conversation::STATE_DRAFT;
+        $new->save();
+        request()->query->remove(Actions::LINK_TO_PARAM);
+        request()->request->remove(Actions::LINK_TO_PARAM);
+
+        return $new->fresh();
+    }
+
+    public function test_the_hint_comes_back_after_undo()
+    {
+        list($user, $mailbox, $original) = $this->scenario();
+        $new = $this->undoneConversation($user, $mailbox, $original);
+
+        $this->assertStringContainsString('value="'.$original->id.'"', $this->hint($new, $mailbox));
+    }
+
+    public function test_removing_the_hint_after_undo_drops_the_link()
+    {
+        list($user, $mailbox, $original) = $this->scenario();
+        $new = $this->undoneConversation($user, $mailbox, $original);
+
+        $response = $this->post(route('linkedconversations.ajax'), ['action' => 'clear_pending', 'conversation_id' => $new->id])->json();
+
+        $this->assertSame('success', $response['status']);
+        $this->assertNull(ConversationLink::pair($original->id, $new->id));
+    }
+
+    public function test_resending_with_an_emptied_field_after_undo_drops_the_link()
+    {
+        list($user, $mailbox, $original) = $this->scenario();
+        $new = $this->undoneConversation($user, $mailbox, $original);
+        $new->state = Conversation::STATE_PUBLISHED;
+        $new->save();
+        request()->merge([Actions::LINK_TO_PARAM => '']);
+
+        \Eventy::action('conversation.created_by_user_can_undo', $new, $this->createdBy($user, $new));
+
+        $this->assertNull(ConversationLink::pair($original->id, $new->id));
+    }
 }

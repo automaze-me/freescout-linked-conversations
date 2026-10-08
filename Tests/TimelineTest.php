@@ -56,6 +56,22 @@ class TimelineTest extends TestCase
         ];
     }
 
+    public function test_the_link_text_shows_the_current_number_of_the_other_conversation()
+    {
+        config(['app.custom_number' => true]);
+        $user = $this->user();
+        $mailbox = $this->mailbox([$user]);
+        $a = $this->conversation($mailbox);
+        $b = $this->conversation($mailbox);
+        $item = Timeline::record(Timeline::EVENT_LINKED, $a, $b, $user->id);
+        \DB::table('conversations')->where('id', $b->id)->update(['number' => $b->id + 100000]);
+        $new = $b->id + 100000;
+
+        $text = $item->getActionText('', true, false, null, 'Jörn');
+
+        $this->assertStringContainsString('>#'.$new.'</a>', $text);
+    }
+
     public function test_the_number_is_plain_text_once_the_other_conversation_is_gone()
     {
         $user = $this->user();

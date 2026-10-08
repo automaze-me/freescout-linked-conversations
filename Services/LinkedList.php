@@ -50,7 +50,7 @@ class LinkedList
     public static function group(Conversation $conversation)
     {
         $open = $conversation->state != Conversation::STATE_DELETED
-            && in_array((int) $conversation->status, [Conversation::STATUS_ACTIVE, Conversation::STATUS_PENDING], true);
+            && ($conversation->isActive() || $conversation->isPending());
 
         return $open ? 0 : 1;
     }

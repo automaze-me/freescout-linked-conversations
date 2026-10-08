@@ -23,7 +23,7 @@ class Presenter
     {
         return $conversation->state == Conversation::STATE_DELETED
             ? 'deleted'
-            : (string) (int) $conversation->status;
+            : (string) (int) substr((string) $conversation->status, 0, 1);
     }
 
     public static function assigneeName(Conversation $conversation)

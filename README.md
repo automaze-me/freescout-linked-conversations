@@ -16,7 +16,7 @@ Typical use: a customer case is solved, but you still need to follow up with a s
 
 ## Permissions
 
-Agents can link, unlink and create linked conversations only when they can view both conversations. Linked conversations in mailboxes an agent cannot access are counted in the sidebar but never shown.
+Agents can link, unlink and create linked conversations only when they can view both conversations. Linked conversations an agent cannot open are counted in the sidebar but never shown.
 
 ## Installation
 
@@ -30,7 +30,7 @@ If your installation keeps `Modules/` outside the FreeScout directory (a symlink
 
 ## Uninstalling
 
-Deactivating keeps the `conversation_links` table, so re-activating restores all links. While the module is inactive, its timeline entries show as empty grey lines.
+Deactivating keeps the `conversation_links` table, so re-activating restores all links. While the module is inactive, its timeline entries show as empty grey lines. Deleting the module (not just deactivating it) also leaves the `conversation_links` table and the module's timeline entries (shown as empty grey lines) in place; the table can be dropped manually if no longer needed.
 
 ## Development
 

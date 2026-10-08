@@ -118,8 +118,8 @@ class Timeline
 
     protected static function numberHtml(array $meta)
     {
-        $text = '#'.(int) ($meta['number'] ?? 0);
         $conversation = Conversation::find((int) ($meta['conversation_id'] ?? 0));
+        $text = '#'.($conversation ? $conversation->number : (int) ($meta['number'] ?? 0));
 
         return $conversation ? '<a href="'.e($conversation->url()).'">'.$text.'</a>' : $text;
     }

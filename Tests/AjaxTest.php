@@ -32,6 +32,9 @@ class AjaxTest extends TestCase
     {
         config(['app.custom_number' => true]);
         list($user, $a, $b) = $this->scenario();
+        \DB::table('conversations')->where('id', $b->id)->update(['number' => $b->id + 100000]);
+        $b = $b->fresh();
+        $this->assertNotEquals($b->id, $b->number);
 
         $response = $this->ajax($user, ['action' => 'search', 'conversation_id' => $a->id, 'number' => '#'.$b->number]);
 

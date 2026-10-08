@@ -3,7 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" href=".lc-collapse">{{ __('Linked Conversations') }} ({{ count($visible) + $hidden_count }})
+                    <a data-toggle="collapse" href=".lc-collapse">{{ __('Linked Conversations') }} ({{ count($visible) }})
                         <b class="caret"></b>
                     </a>
                 </h4>
@@ -13,7 +13,7 @@
                     <ul class="sidebar-block-list lc-list">
                         @foreach ($visible as $linked)
                             <li class="lc-item">
-                                <a href="#" class="lc-unlink" role="button" data-lc-linked-id="{{ $linked->id }}" data-lc-confirm="{{ __('Unlink conversation #:number?', ['number' => $linked->number]) }}" data-lc-ok="{{ __('Unlink') }}" title="{{ __('Unlink') }}" aria-label="{{ __('Unlink') }}">&times;</a>
+                                <a href="#" class="lc-unlink" role="button" data-lc-linked-id="{{ $linked->id }}" data-lc-confirm="{{ __('Unlink conversation #:number?', ['number' => $linked->number]) }}" data-lc-ok="{{ __('Unlink Conversation') }}" title="{{ __('Unlink Conversation') }}" aria-label="{{ __('Unlink Conversation') }}">&times;</a>
                                 <a href="{{ $linked->url() }}" class="help-link lc-link">#{{ $linked->number }} {{ $linked->getSubject() }}</a>
                                 <div class="lc-meta">
                                     <span class="lc-status lc-status-{{ \Modules\LinkedConversations\Services\Presenter::statusKey($linked) }}" aria-hidden="true">&#9679;</span>
@@ -27,12 +27,12 @@
                         @endforeach
                     </ul>
                     @if ($hidden_count == 1)
-                        <div class="lc-hidden">{{ __('+1 linked conversation in another mailbox') }}</div>
+                        <div class="lc-hidden">{{ __('+1 linked conversation you cannot open') }}</div>
                     @elseif ($hidden_count > 1)
-                        <div class="lc-hidden">{{ __('+:count linked conversations in other mailboxes', ['count' => $hidden_count]) }}</div>
+                        <div class="lc-hidden">{{ __('+:count linked conversations you cannot open', ['count' => $hidden_count]) }}</div>
                     @endif
                     <div class="lc-actions">
-                        <a href="{{ \Modules\LinkedConversations\Services\Actions::linkDialogUrl($conversation) }}" @foreach (\Modules\LinkedConversations\Services\Actions::linkDialogAttrs() as $attr => $value) {{ $attr }}="{{ $value }}" @endforeach>+ {{ __('Link') }}</a>
+                        <a href="{{ \Modules\LinkedConversations\Services\Actions::linkDialogUrl($conversation) }}" @foreach (\Modules\LinkedConversations\Services\Actions::linkDialogAttrs() as $attr => $value) {{ $attr }}="{{ $value }}" @endforeach>+ {{ __('Link Conversation') }}</a>
                         <a href="{{ $new_target['url'] }}" @foreach ($new_target['attrs'] as $attr => $value) {{ $attr }}="{{ $value }}" @endforeach>+ {{ __('New Conversation') }}</a>
                     </div>
                 </div>

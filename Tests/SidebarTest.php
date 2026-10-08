@@ -4,6 +4,8 @@ namespace Modules\LinkedConversations\Tests;
 
 use App\Conversation;
 use Modules\LinkedConversations\Entities\ConversationLink;
+use Modules\LinkedConversations\Services\LinkedList;
+use Modules\LinkedConversations\Services\Presenter;
 
 class SidebarTest extends TestCase
 {
@@ -28,12 +30,12 @@ class SidebarTest extends TestCase
         $assignee = $this->user();
         $mailbox = $this->mailbox([$user, $assignee]);
         $current = $this->conversation($mailbox);
-        $closed = $this->conversation($mailbox, ['subject' => 'Closed question', 'status' => Conversation::STATUS_CLOSED]);
         $pending = $this->conversation($mailbox, [
             'subject' => 'Return order 4510',
             'status'  => Conversation::STATUS_PENDING,
             'user_id' => $assignee->id,
         ]);
+        $closed = $this->conversation($mailbox, ['subject' => 'Closed question', 'status' => Conversation::STATUS_CLOSED]);
         ConversationLink::link($current->id, $closed->id, ConversationLink::SOURCE_MANUAL);
         ConversationLink::link($current->id, $pending->id, ConversationLink::SOURCE_MANUAL);
 
@@ -46,6 +48,29 @@ class SidebarTest extends TestCase
         $this->assertStringContainsString('lc-status-'.Conversation::STATUS_PENDING, $html);
         $this->assertLessThan(strpos($html, 'Closed question'), strpos($html, 'Return order 4510'));
         $this->assertStringContainsString('data-lc-linked-id="'.$closed->id.'"', $html);
+    }
+
+    public function test_the_heading_counts_visible_rows_only()
+    {
+        $user = $this->user();
+        $current = $this->conversation($this->mailbox([$user]));
+        $visible = $this->conversation($current->mailbox);
+        $secret = $this->conversation($this->mailbox());
+        ConversationLink::link($current->id, $visible->id, ConversationLink::SOURCE_MANUAL);
+        ConversationLink::link($current->id, $secret->id, ConversationLink::SOURCE_MANUAL);
+
+        $html = $this->render($current, $user);
+
+        $this->assertMatchesRegularExpression('/Linked Conversations \(1\)/', $html);
+        $this->assertStringContainsString('+1 linked conversation you cannot open', $html);
+    }
+
+    public function test_sub_statuses_count_as_their_main_status()
+    {
+        $sub = $this->conversation($this->mailbox(), ['status' => 21]);
+
+        $this->assertSame(0, LinkedList::group($sub));
+        $this->assertSame('2', Presenter::statusKey($sub));
     }
 
     public function test_names_the_mailbox_only_when_it_differs()
@@ -75,7 +100,7 @@ class SidebarTest extends TestCase
         $html = $this->render($current, $user);
 
         $this->assertStringContainsString('lc-sidebar', $html);
-        $this->assertStringContainsString('+1 linked conversation in another mailbox', $html);
+        $this->assertStringContainsString('+1 linked conversation you cannot open', $html);
         $this->assertStringNotContainsString('Secret supplier thread', $html);
     }
 

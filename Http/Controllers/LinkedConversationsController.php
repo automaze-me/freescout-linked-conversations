@@ -58,7 +58,7 @@ class LinkedConversationsController extends Controller
 
             case 'clear_pending':
                 if ($conversation->isDraft()) {
-                    \Modules\LinkedConversations\Services\NewLinked::clearPending($conversation);
+                    \Modules\LinkedConversations\Services\NewLinked::dropPending($conversation);
                 }
 
                 return response()->json(['status' => 'success']);
