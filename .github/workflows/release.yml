@@ -1,0 +1,33 @@
+name: Release
+
+# On a version tag (e.g. v1.0.0), build the install zip and publish a GitHub Release.
+# The zip contains a top-level LinkedConversations/ folder so users extract it straight into
+# FreeScout's Modules/ directory (-> Modules/LinkedConversations/).
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build module zip
+        # git archive honors export-ignore in .gitattributes and prefixes every
+        # entry with LinkedConversations/ so it unpacks to Modules/LinkedConversations/.
+        run: git archive --format=zip --prefix=LinkedConversations/ -o LinkedConversations.zip HEAD
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" LinkedConversations.zip \
+            --repo "${GITHUB_REPOSITORY}" \
+            --title "${GITHUB_REF_NAME}" \
+            --generate-notes
