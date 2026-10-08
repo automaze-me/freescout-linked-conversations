@@ -8,3 +8,36 @@
 .lc-dialog .lc-result:last-child {
     border-bottom: 0;
 }
+
+/* Sidebar box */
+.lc-sidebar .lc-item {
+    position: relative;
+    padding-right: 18px;
+}
+.lc-sidebar .lc-unlink {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #a5b2bd;
+    font-size: 16px;
+    line-height: 1;
+    text-decoration: none;
+}
+.lc-sidebar .lc-unlink:hover {
+    color: #de6864;
+}
+.lc-sidebar .lc-meta,
+.lc-sidebar .lc-hidden {
+    color: #8b98a6;
+    font-size: 12px;
+    margin: 2px 0 6px 0;
+}
+.lc-sidebar .lc-actions a {
+    margin-right: 12px;
+}
+/* Same colours as core's Conversation::$status_colors */
+.lc-status-1 { color: #6ac27b; }
+.lc-status-2 { color: #8b98a6; }
+.lc-status-3 { color: #6b6b6b; }
+.lc-status-4 { color: #de6864; }
+.lc-status-deleted { color: #de6864; }

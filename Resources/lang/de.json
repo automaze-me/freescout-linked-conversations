@@ -14,5 +14,10 @@
     "New Linked Conversation…": "Neues verknüpftes Gespräch…",
     "Conversation number": "Gesprächsnummer",
     "Other conversations of this customer": "Weitere Gespräche dieses Kunden",
-    "Continue": "Weiter"
+    "Continue": "Weiter",
+    "Linked Conversations": "Verknüpfte Gespräche",
+    "Unlink": "Verknüpfung lösen",
+    "Unlink conversation #:number?": "Verknüpfung mit Gespräch #:number lösen?",
+    "+1 linked conversation in another mailbox": "+1 verknüpftes Gespräch in einem anderen Postfach",
+    "+:count linked conversations in other mailboxes": "+:count verknüpfte Gespräche in anderen Postfächern"
 }

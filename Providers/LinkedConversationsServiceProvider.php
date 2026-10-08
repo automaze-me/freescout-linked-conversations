@@ -78,6 +78,12 @@ class LinkedConversationsServiceProvider extends ServiceProvider
 
             return $stylesheets;
         }, 20, 1);
+
+        // Sidebar box above "Previous Conversations" (only rendered when the
+        // conversation has a customer, like the rest of core's customer sidebar).
+        \Eventy::addAction('conversation.before_prev_convs', function ($customer, $conversation, $mailbox) {
+            \Modules\LinkedConversations\Services\Sidebar::render($conversation);
+        }, 20, 3);
     }
 
     public function provides()

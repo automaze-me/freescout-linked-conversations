@@ -60,3 +60,24 @@ function initLinkedConversationsNewDialog(modal)
 		}
 	});
 }
+
+// Sidebar: unlink after confirmation.
+$(document).on('click', '.lc-sidebar .lc-unlink', function(e) {
+	e.preventDefault();
+	var link = $(this);
+	var root = link.closest('.lc-sidebar');
+	showModalConfirm(htmlEscape(link.attr('data-lc-confirm')), 'lc-confirm-unlink', {
+		on_show: function(modal) {
+			modal.children().find('.lc-confirm-unlink:first').click(function() {
+				modal.modal('hide');
+				lcAjax(root, {action: 'unlink', linked_id: link.attr('data-lc-linked-id')}, function(response) {
+					if (isAjaxSuccess(response)) {
+						window.location.href = '';
+					} else {
+						showAjaxResult(response);
+					}
+				});
+			});
+		}
+	}, htmlEscape(link.attr('data-lc-ok')));
+});
