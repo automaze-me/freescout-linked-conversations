@@ -57,6 +57,11 @@ class LinkedConversationsServiceProvider extends ServiceProvider
         \Eventy::addAction('conversations.before_delete_forever', function ($conversation_ids) {
             \Modules\LinkedConversations\Services\Lifecycle::deleted((array) $conversation_ids);
         }, 20, 1);
+
+        // Timeline text for the module's line items (action type 170).
+        \Eventy::addFilter('thread.action_text', function ($did_this, $thread) {
+            return \Modules\LinkedConversations\Services\Timeline::actionText($did_this, $thread);
+        }, 20, 2);
     }
 
     public function provides()

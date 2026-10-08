@@ -1,2 +1,6 @@
 {
+    ":person linked this conversation with :number": ":person hat dieses Gespräch mit :number verknüpft",
+    ":person unlinked conversation :number": ":person hat die Verknüpfung mit :number gelöst",
+    ":person created linked conversation :number": ":person hat das verknüpfte Gespräch :number angelegt",
+    ":person created this conversation from :number": ":person hat dieses Gespräch aus :number angelegt"
 }

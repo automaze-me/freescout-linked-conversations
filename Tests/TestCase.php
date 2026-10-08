@@ -5,8 +5,10 @@ namespace Modules\LinkedConversations\Tests;
 use App\Conversation;
 use App\Customer;
 use App\Mailbox;
+use App\Thread;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Modules\LinkedConversations\Services\Timeline;
 use Tests\TestCase as CoreTestCase;
 
 abstract class TestCase extends CoreTestCase
@@ -73,6 +75,23 @@ abstract class TestCase extends CoreTestCase
     protected function customer()
     {
         return factory(Customer::class)->create();
+    }
+
+    /**
+     * Number of this module's timeline line items of the given event.
+     */
+    protected function timelineEntries(Conversation $conversation, $event)
+    {
+        return Thread::where('conversation_id', $conversation->id)
+            ->where('type', Thread::TYPE_LINEITEM)
+            ->where('action_type', Timeline::ACTION_TYPE)
+            ->get()
+            ->filter(function ($thread) use ($event) {
+                $meta = $thread->getMeta(Timeline::META_KEY);
+
+                return is_array($meta) && $meta['event'] === $event;
+            })
+            ->count();
     }
 
     /**
