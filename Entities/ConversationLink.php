@@ -2,6 +2,7 @@
 
 namespace Modules\LinkedConversations\Entities;
 
+use App\Conversation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 
@@ -91,6 +92,44 @@ class ConversationLink extends Model
             })
             ->values()
             ->all();
+    }
+
+    /**
+     * Linked, non-draft conversations for several conversations at once, in a
+     * single SQL statement (UNION ALL of both sides of the pair).
+     *
+     * @return array [conversation_id => [object{owner_id, id, number, mailbox_id}, ...]]
+     */
+    public static function linkedMap(array $conversation_ids)
+    {
+        $ids = array_values(array_unique(array_filter(array_map('intval', $conversation_ids))));
+        if (!$ids) {
+            return [];
+        }
+
+        // The displayed number is the id unless custom numbers are enabled.
+        $number = 'c.'.Conversation::numberFieldName().' as number';
+
+        $low_side = \DB::table('conversation_links as l')
+            ->join('conversations as c', 'c.id', '=', 'l.linked_conversation_id')
+            ->whereIn('l.conversation_id', $ids)
+            ->where('c.state', '!=', Conversation::STATE_DRAFT)
+            ->select('l.conversation_id as owner_id', 'c.id', $number, 'c.mailbox_id');
+
+        $rows = \DB::table('conversation_links as l')
+            ->join('conversations as c', 'c.id', '=', 'l.conversation_id')
+            ->whereIn('l.linked_conversation_id', $ids)
+            ->where('c.state', '!=', Conversation::STATE_DRAFT)
+            ->select('l.linked_conversation_id as owner_id', 'c.id', $number, 'c.mailbox_id')
+            ->unionAll($low_side)
+            ->get();
+
+        $map = [];
+        foreach ($rows as $row) {
+            $map[(int) $row->owner_id][] = $row;
+        }
+
+        return $map;
     }
 
     /**

@@ -34,6 +34,7 @@ abstract class TestCase extends CoreTestCase
         }
 
         Conversation::$custom_number_cache = null;
+        \Modules\LinkedConversations\Services\ListIcons::reset();
     }
 
     protected function tearDown(): void
@@ -51,7 +52,7 @@ abstract class TestCase extends CoreTestCase
 
     protected function mailbox(array $users = [], array $attributes = [])
     {
-        $mailbox = factory(Mailbox::class)->create($attributes);
+        $mailbox = factory(Mailbox::class)->create(array_merge(['meta' => []], $attributes));
         foreach ($users as $user) {
             $mailbox->users()->attach($user->id);
         }

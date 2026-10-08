@@ -51,3 +51,9 @@
     line-height: 1;
     text-decoration: none;
 }
+
+/* Conversation list */
+.lc-list-icon {
+    margin-right: 4px;
+    color: #8b98a6;
+}

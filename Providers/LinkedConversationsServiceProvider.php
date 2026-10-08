@@ -99,6 +99,14 @@ class LinkedConversationsServiceProvider extends ServiceProvider
         \Eventy::addAction('conversation.created_by_user', function ($conversation, $thread) {
             \Modules\LinkedConversations\Services\NewLinked::announce($conversation);
         }, 20, 2);
+
+        // Conversation lists: one query per page, icon before the subject.
+        \Eventy::addFilter('conversations_table.preload_table_data', function ($conversations) {
+            return \Modules\LinkedConversations\Services\ListIcons::preload($conversations);
+        }, 20, 1);
+        \Eventy::addAction('conversations_table.before_subject', function ($conversation) {
+            \Modules\LinkedConversations\Services\ListIcons::render($conversation, auth()->user());
+        }, 20, 1);
     }
 
     public function provides()
