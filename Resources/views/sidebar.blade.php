@@ -31,9 +31,9 @@
                     @elseif ($hidden_count > 1)
                         <div class="lc-hidden">{{ __('+:count linked conversations you cannot open', ['count' => $hidden_count]) }}</div>
                     @endif
-                    <div class="lc-actions">
-                        <a href="{{ \Modules\LinkedConversations\Services\Actions::linkDialogUrl($conversation) }}" @foreach (\Modules\LinkedConversations\Services\Actions::linkDialogAttrs() as $attr => $value) {{ $attr }}="{{ $value }}" @endforeach>+ {{ __('Link Conversation') }}</a>
-                        <a href="{{ $new_target['url'] }}" @foreach ($new_target['attrs'] as $attr => $value) {{ $attr }}="{{ $value }}" @endforeach>+ {{ __('New Conversation') }}</a>
+                    <div class="lc-actions margin-top-10 small">
+                        <a href="{{ \Modules\LinkedConversations\Services\Actions::linkDialogUrl($conversation) }}" class="sidebar-block-link" @foreach (\Modules\LinkedConversations\Services\Actions::linkDialogAttrs() as $attr => $value) {{ $attr }}="{{ $value }}" @endforeach><i class="glyphicon glyphicon-link"></i> {{ __('Link Conversation') }}</a>
+                        <a href="{{ $new_target['url'] }}" class="sidebar-block-link" @foreach ($new_target['attrs'] as $attr => $value) {{ $attr }}="{{ $value }}" @endforeach><i class="glyphicon glyphicon-plus"></i> {{ __('New Conversation') }}</a>
                     </div>
                 </div>
             </div>
