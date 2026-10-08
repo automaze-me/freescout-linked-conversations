@@ -41,3 +41,13 @@
 .lc-status-3 { color: #6b6b6b; }
 .lc-status-4 { color: #de6864; }
 .lc-status-deleted { color: #de6864; }
+
+/* New-conversation form hint */
+.lc-pending .alert {
+    margin-bottom: 0;
+}
+.lc-pending .lc-pending-remove {
+    font-size: 18px;
+    line-height: 1;
+    text-decoration: none;
+}

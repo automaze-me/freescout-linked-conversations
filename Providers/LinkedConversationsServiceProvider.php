@@ -84,6 +84,21 @@ class LinkedConversationsServiceProvider extends ServiceProvider
         \Eventy::addAction('conversation.before_prev_convs', function ($customer, $conversation, $mailbox) {
             \Modules\LinkedConversations\Services\Sidebar::render($conversation);
         }, 20, 3);
+
+        // New linked conversation: hint in core's create form, memory on the
+        // draft, link on creation, timeline entries after the undo timeout.
+        \Eventy::addAction('conversation.create_form.before_subject', function ($conversation, $mailbox, $thread) {
+            \Modules\LinkedConversations\Services\NewLinked::renderHint($conversation);
+        }, 20, 3);
+        \Event::listen(\App\Events\UserCreatedConversationDraft::class, function ($event) {
+            \Modules\LinkedConversations\Services\NewLinked::rememberOnDraft($event->conversation);
+        });
+        \Eventy::addAction('conversation.created_by_user_can_undo', function ($conversation, $thread) {
+            \Modules\LinkedConversations\Services\NewLinked::linkOnCreate($conversation, $thread);
+        }, 20, 2);
+        \Eventy::addAction('conversation.created_by_user', function ($conversation, $thread) {
+            \Modules\LinkedConversations\Services\NewLinked::announce($conversation);
+        }, 20, 2);
     }
 
     public function provides()

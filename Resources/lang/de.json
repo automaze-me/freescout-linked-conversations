@@ -19,5 +19,7 @@
     "Unlink": "Verknüpfung lösen",
     "Unlink conversation #:number?": "Verknüpfung mit Gespräch #:number lösen?",
     "+1 linked conversation in another mailbox": "+1 verknüpftes Gespräch in einem anderen Postfach",
-    "+:count linked conversations in other mailboxes": "+:count verknüpfte Gespräche in anderen Postfächern"
+    "+:count linked conversations in other mailboxes": "+:count verknüpfte Gespräche in anderen Postfächern",
+    "Will be linked to #:number \":subject\" after creating": "Wird nach dem Anlegen mit #:number „:subject“ verknüpft",
+    "Do not link": "Nicht verknüpfen"
 }

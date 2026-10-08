@@ -81,3 +81,17 @@ $(document).on('click', '.lc-sidebar .lc-unlink', function(e) {
 		}
 	}, htmlEscape(link.attr('data-lc-ok')));
 });
+
+// New-conversation form: drop the pending link.
+$(document).on('click', '.lc-pending .lc-pending-remove', function(e) {
+	e.preventDefault();
+	var hint = $(this).closest('.lc-pending');
+	// The field stays in the form, empty: that tells the server not to link,
+	// even when a saved draft still remembers the link.
+	hint.find('input[name="linkedconversations_link_to"]:first').val('');
+	hint.find('.lc-pending-text:first').addClass('hidden');
+	var conversation_id = $('#form-create input[name="conversation_id"]:first').val();
+	if (conversation_id) {
+		fsAjax({action: 'clear_pending', conversation_id: conversation_id}, hint.attr('data-lc-ajax-url'), function() {}, true);
+	}
+});

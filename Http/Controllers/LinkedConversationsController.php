@@ -55,6 +55,13 @@ class LinkedConversationsController extends Controller
                 }
 
                 return response()->json(['status' => 'success']);
+
+            case 'clear_pending':
+                if ($conversation->isDraft()) {
+                    \Modules\LinkedConversations\Services\NewLinked::clearPending($conversation);
+                }
+
+                return response()->json(['status' => 'success']);
         }
 
         return $this->error(__('Unknown action'));
