@@ -3,7 +3,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" href=".lc-collapse">{{ __('Linked Conversations') }} ({{ count($visible) }})
+                    <a data-toggle="collapse" href=".lc-collapse">{{ __('Linked Conversations') }}
                         <b class="caret"></b>
                     </a>
                 </h4>

@@ -50,7 +50,8 @@ class SidebarTest extends TestCase
         $this->assertStringContainsString('data-lc-linked-id="'.$closed->id.'"', $html);
     }
 
-    public function test_the_heading_counts_visible_rows_only()
+    // Like core's "Previous Conversations" and other sidebar blocks: no count in the heading.
+    public function test_the_heading_shows_no_count()
     {
         $user = $this->user();
         $current = $this->conversation($this->mailbox([$user]));
@@ -61,7 +62,8 @@ class SidebarTest extends TestCase
 
         $html = $this->render($current, $user);
 
-        $this->assertMatchesRegularExpression('/Linked Conversations \(1\)/', $html);
+        $this->assertStringContainsString('Linked Conversations', $html);
+        $this->assertDoesNotMatchRegularExpression('/Linked Conversations\s*\(\d+\)/', $html);
         $this->assertStringContainsString('+1 linked conversation you cannot open', $html);
     }
 
