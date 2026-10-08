@@ -26,13 +26,26 @@
 .lc-sidebar .lc-unlink:hover {
     color: #de6864;
 }
+/* Subject in core's text colour: linked conversations are working items,
+   not muted history like "Previous Conversations". */
+.lc-sidebar .lc-link,
+.lc-sidebar .lc-link:focus {
+    color: #2a3b47;
+}
+.lc-sidebar .lc-link:hover {
+    color: #3197d6;
+    text-decoration: underline;
+}
 .lc-sidebar .lc-meta,
 .lc-sidebar .lc-hidden {
     color: #8b98a6;
     font-size: 12px;
     margin: 2px 0 6px 0;
 }
+/* Each action wraps as a whole, never mid-label. */
 .lc-sidebar .lc-actions a {
+    display: inline-block;
+    white-space: nowrap;
     margin-right: 12px;
 }
 /* Same colours as core's Conversation::$status_colors */

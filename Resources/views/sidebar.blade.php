@@ -14,7 +14,7 @@
                         @foreach ($visible as $linked)
                             <li class="lc-item">
                                 <a href="#" class="lc-unlink" role="button" data-lc-linked-id="{{ $linked->id }}" data-lc-confirm="{{ __('Unlink conversation #:number?', ['number' => $linked->number]) }}" data-lc-ok="{{ __('Unlink Conversation') }}" title="{{ __('Unlink Conversation') }}" aria-label="{{ __('Unlink Conversation') }}">&times;</a>
-                                <a href="{{ $linked->url() }}" class="help-link lc-link">#{{ $linked->number }} {{ $linked->getSubject() }}</a>
+                                <a href="{{ $linked->url() }}" class="lc-link">#{{ $linked->number }} {{ $linked->getSubject() }}</a>
                                 <div class="lc-meta">
                                     <span class="lc-status lc-status-{{ \Modules\LinkedConversations\Services\Presenter::statusKey($linked) }}" aria-hidden="true">&#9679;</span>
                                     {{ \Modules\LinkedConversations\Services\Presenter::statusLabel($linked) }}
