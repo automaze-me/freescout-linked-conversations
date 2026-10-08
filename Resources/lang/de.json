@@ -2,5 +2,10 @@
     ":person linked this conversation with :number": ":person hat dieses Gespräch mit :number verknüpft",
     ":person unlinked conversation :number": ":person hat die Verknüpfung mit :number gelöst",
     ":person created linked conversation :number": ":person hat das verknüpfte Gespräch :number angelegt",
-    ":person created this conversation from :number": ":person hat dieses Gespräch aus :number angelegt"
+    ":person created this conversation from :number": ":person hat dieses Gespräch aus :number angelegt",
+    "This is the current conversation": "Das ist das aktuelle Gespräch",
+    "Drafts can not be linked": "Entwürfe können nicht verknüpft werden",
+    "Already linked": "Bereits verknüpft",
+    "Unknown action": "Unbekannte Aktion",
+    "Link": "Verknüpfen"
 }
