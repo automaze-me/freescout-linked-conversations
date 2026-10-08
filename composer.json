@@ -1,0 +1,26 @@
+{
+    "name": "automaze-me/freescout-linked-conversations",
+    "description": "FreeScout module: link conversations to each other, start new linked conversations and link forwards automatically.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jörn Bungartz - automaze.me",
+            "homepage": "https://automaze.me"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\LinkedConversations\\Providers\\LinkedConversationsServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\LinkedConversations\\": ""
+        }
+    }
+}
