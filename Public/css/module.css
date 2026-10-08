@@ -1,0 +1,10 @@
+/* Linked Conversations module */
+
+/* Link dialog */
+.lc-dialog .lc-result {
+    padding: 8px 0;
+    border-bottom: 1px solid #e3e8eb;
+}
+.lc-dialog .lc-result:last-child {
+    border-bottom: 0;
+}

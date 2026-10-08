@@ -7,5 +7,12 @@
     "Drafts can not be linked": "Entwürfe können nicht verknüpft werden",
     "Already linked": "Bereits verknüpft",
     "Unknown action": "Unbekannte Aktion",
-    "Link": "Verknüpfen"
+    "Link": "Verknüpfen",
+    "Link Conversation": "Gespräch verknüpfen",
+    "Link Conversation…": "Gespräch verknüpfen…",
+    "New Linked Conversation": "Neues verknüpftes Gespräch",
+    "New Linked Conversation…": "Neues verknüpftes Gespräch…",
+    "Conversation number": "Gesprächsnummer",
+    "Other conversations of this customer": "Weitere Gespräche dieses Kunden",
+    "Continue": "Weiter"
 }

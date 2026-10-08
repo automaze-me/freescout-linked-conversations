@@ -9,4 +9,5 @@ Route::group([
     'namespace'  => 'Modules\LinkedConversations\Http\Controllers',
 ], function () {
     Route::post('/linked-conversations/ajax', 'LinkedConversationsController@ajax')->name('linkedconversations.ajax');
+    Route::get('/linked-conversations/ajax-html/{action}', 'LinkedConversationsController@ajaxHtml')->name('linkedconversations.ajax_html');
 });

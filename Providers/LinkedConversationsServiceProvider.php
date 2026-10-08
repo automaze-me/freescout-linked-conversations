@@ -62,6 +62,22 @@ class LinkedConversationsServiceProvider extends ServiceProvider
         \Eventy::addFilter('thread.action_text', function ($did_this, $thread) {
             return \Modules\LinkedConversations\Services\Timeline::actionText($did_this, $thread);
         }, 20, 2);
+
+        // "More Actions" menu: Link Conversation… / New Linked Conversation…
+        \Eventy::addFilter('conversation.get_action_buttons', function ($actions, $conversation, $user, $mailbox) {
+            return \Modules\LinkedConversations\Services\Actions::addButtons($actions, $conversation, $user, $mailbox);
+        }, 20, 4);
+
+        \Eventy::addFilter('javascripts', function ($javascripts) {
+            $javascripts[] = \Module::getPublicPath(LINKED_CONVERSATIONS_MODULE).'/js/module.js';
+
+            return $javascripts;
+        }, 20, 1);
+        \Eventy::addFilter('stylesheets', function ($stylesheets) {
+            $stylesheets[] = \Module::getPublicPath(LINKED_CONVERSATIONS_MODULE).'/css/module.css';
+
+            return $stylesheets;
+        }, 20, 1);
     }
 
     public function provides()

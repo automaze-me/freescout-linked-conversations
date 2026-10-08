@@ -60,6 +60,31 @@ class LinkedConversationsController extends Controller
         return $this->error(__('Unknown action'));
     }
 
+    public function ajaxHtml(Request $request, $action)
+    {
+        $user = auth()->user();
+        $conversation = Conversation::find((int) $request->input('conversation_id'));
+        if (!$conversation || !$user->can('view', $conversation)) {
+            abort(404);
+        }
+
+        switch ($action) {
+            case 'link_dialog':
+                return view('linkedconversations::ajax_html/link_dialog', [
+                    'conversation' => $conversation,
+                    'candidates'   => LinkSearch::candidates($conversation, $user),
+                ]);
+
+            case 'new_dialog':
+                return view('linkedconversations::ajax_html/new_dialog', [
+                    'conversation' => $conversation,
+                    'mailboxes'    => $user->mailboxesCanView(true),
+                ]);
+        }
+
+        abort(404);
+    }
+
     protected function error($msg)
     {
         return response()->json(['status' => 'error', 'msg' => $msg]);
