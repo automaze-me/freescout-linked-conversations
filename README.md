@@ -4,6 +4,24 @@ Link conversations to each other, start a new conversation that is linked to the
 
 Typical use: a customer case is solved, but you still need to follow up with a supplier, a fulfilment partner or a colleague in another mailbox. Start a new linked conversation from the customer's conversation; both stay connected, each keeps its own status and assignee, and the follow-up can stay open long after the customer's conversation is closed.
 
+## Screenshots
+
+A closed customer conversation with its follow-ups in the **Linked Conversations** box. Each one shows its status, its assignee and, if it is in another mailbox, the mailbox name. The timeline shows who linked or created which conversation:
+
+![A closed customer conversation with three linked conversations in the sidebar](docs/screenshots/conversation.png)
+
+**Link Conversation…** finds a conversation by its number and suggests the customer's other conversations:
+
+![The Link Conversation dialog](docs/screenshots/link-dialog.png)
+
+**New Linked Conversation…** opens FreeScout's normal new-conversation form and links the new conversation once it is created:
+
+![The new-conversation form with the "Will be linked to" notice](docs/screenshots/new-linked.png)
+
+In conversation lists, a chain icon marks conversations that have links. Hover over it to see the linked numbers:
+
+![Chain icons in the conversation list, with the tooltip of linked numbers](docs/screenshots/list.png)
+
 ## Features
 
 - **Link Conversation…** in the conversation's "More Actions" menu: find a conversation by its number (or pick one of the customer's other conversations) and link it.
